@@ -1,4 +1,12 @@
 import subprocess
+# Check if tqdm is installed
+try:
+    import tqdm
+except ImportError:
+    print("Installing tqdm...")
+    subprocess.run(["pip", "install", "tqdm"])
+
+from tqdm import tqdm
 
 # Check if Homebrew is installed and update it if necessary
 brew_installed = subprocess.run(["which", "brew"], capture_output=True, text=True).stdout.strip()
@@ -44,6 +52,15 @@ if appium_installed:
 else:
     print("Installing Appium...")
     subprocess.run(["npm", "install", "-g", "appium"])
+
+# Install or update Appium Inspector
+appium_inspector_installed = subprocess.run(["which", "appium-inspector"], capture_output=True, text=True).stdout.strip()
+if appium_inspector_installed:
+    print("Appium Inspector is already installed.")
+    subprocess.run(["npm", "install", "-g", "appium-inspector"])
+else:
+    print("Installing Appium Inspector...")
+    subprocess.run(["npm", "install", "-g", "appium-inspector"])
 
 # Check if Xcode is installed and update it if necessary
 xcode_installed = subprocess.run(["which", "xcode-select"], capture_output=True, text=True).stdout.strip()
